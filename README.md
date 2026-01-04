@@ -29,14 +29,14 @@ Add the library from the PlatformIO registry or clone the repository and include
 [env:native]
 platform = native
 lib_deps = 
-  pba3h11aso/µTBits@^0.6.22
+  pba3h11aso/µTBits
 
 [env:mega]
 platform = atmelavr
 board = megaatmega2560
 framework = arduino
 lib_deps = 
-  pba3h11aso/µTBits@^0.6.22
+  pba3h11aso/µTBits
 ```
 
 **Include in code**
