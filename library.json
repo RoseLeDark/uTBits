@@ -1,6 +1,6 @@
 {
   "name": "µTBits",
-  "version": "0.5.2",
+  "version": "0.6.2",
   "description": "A header-only, platform-independent C++ utility library for embedded and systems programming.",
   "keywords": [
     "header-only",
@@ -10,7 +10,14 @@
     "fastview",
     "color",
     "math",
-    "memory"
+    "memory",
+    "vector",
+    "vector2",
+    "vector3",
+    "vector4",
+    "quaternion",
+    "rectangle",
+    "ray"
   ],
   "authors": [
     {
