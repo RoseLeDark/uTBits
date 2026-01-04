@@ -7,14 +7,8 @@
 #define COLORCON 0.003921568627450980392156862745098
 
 namespace utb {
-    namespace color_constants {
-        constexpr unsigned long COLOR_MASK_R = 0xFF000000;
-        constexpr unsigned long COLOR_MASK_G = 0x00FF0000;
-        constexpr unsigned long COLOR_MASK_B = 0x0000FF00;
-        constexpr unsigned long COLOR_MASK_A = 0x000000FF;
-    }
 
-    namespace math {
+    namespace grafic {
         template <typename T> 
         class basic_color {
         public:

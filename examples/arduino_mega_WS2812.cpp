@@ -47,7 +47,7 @@ static inline void sendByte(uint8_t b) {
     }
 }
 
-static inline void sendColor(const utb::math::color& c) {
+static inline void sendColor(const utb::grafic::color& c) {
     // WS2812 = GRB
     sendByte((uint8_t)(c.g * 255));
     sendByte((uint8_t)(c.r * 255));
@@ -66,7 +66,7 @@ void setup() {
     TCCR1A = 0;
     TCCR1B = (1 << CS10);
 
-    utb::math::color red = utb::from_name<utb::math::color>(utb::color_name::Red);
+    utb::grafic::color red = utb::grafic::from_name(utb::grafic::color_name::Red);
 
     sendColor(red);
     delayMicroseconds(60);
@@ -85,7 +85,7 @@ void loop() {
     float g = fabsf(sinf(6.28318f * t + 2.094f));   // +120°
     float b = fabsf(sinf(6.28318f * t + 4.188f));   // +240°
 
-    utb::math::color c(r, g, b);
+    utb::grafic::color c(r, g, b);
 
     sendColor(c);
 
