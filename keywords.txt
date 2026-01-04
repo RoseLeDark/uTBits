@@ -1,0 +1,112 @@
+utb	KEYWORD1	uTBits top-level namespace
+fast_addr_t	KEYWORD1	Typed memory/register view
+fast_register_view	KEYWORD1	Fast register view helper
+create_fast_view	KEYWORD2	Create a fast_addr_t view for a memory/register address
+set	KEYWORD2	Set a single bit in a fast_addr_t view
+flip	KEYWORD2	Toggle a bit or bits in a fast_addr_t view
+num_ones	KEYWORD2	Count set bits in a view
+num_zeros	KEYWORD2	Count zero bits in a view
+value	KEYWORD2	Access underlying numeric value (union member)
+utb::grafic::color	KEYWORD1	Color type (RRGGBBAA integer representation)
+utb::grafic::color	KEYWORD1	Float-based color type (0.0..1.0)
+from_name	KEYWORD2	Construct a color from a color_name
+color_name	LITERAL	Predefined named colors (RRGGBBAA)
+nlz	KEYWORD2	Count leading zeros / bit width helper
+nlz_base	KEYWORD2	Internal leading-zero base helper
+int_to_type	KEYWORD1	Type tag for compile-time dispatch
+type_to_type	KEYWORD1	Type wrapper alias
+select	KEYWORD2	Compile-time type selector
+copy_n	KEYWORD2	Copy N elements (optimized)
+copy	KEYWORD2	Copy range (optimized)
+move_n	KEYWORD2	Move N elements (optimized)
+move	KEYWORD2	Move range (optimized)
+copy_construct_n	KEYWORD2	Copy-construct N elements
+destruct_n	KEYWORD2	Destruct N elements
+construct_n	KEYWORD2	Construct N elements
+copy_construct	KEYWORD2	Copy-construct single element
+construct	KEYWORD2	Default-construct single element
+destruct	KEYWORD2	Destruct single element
+foreach	KEYWORD2	Apply function to range
+lower_bound	KEYWORD2	Binary search lower bound
+upper_bound	KEYWORD2	Binary search upper bound
+binary_search	KEYWORD2	Binary search predicate
+find	KEYWORD2	Find value in range
+find_if	KEYWORD2	Find with predicate
+accumulate	KEYWORD2	Accumulate range into dest
+fill	KEYWORD2	Fill range with value
+fill_n	KEYWORD2	Fill N elements with value
+swap_ranges	KEYWORD2	Swap ranges
+random_shuffle	KEYWORD2	Random shuffle with custom RNG
+popcount	KEYWORD2	Count set bits (builtin)
+hex2char	KEYWORD2	Hex char to numeric conversion
+isalpha	KEYWORD2	Character classification helpers
+isxdigit	KEYWORD2	Hex digit test
+abs	KEYWORD2	Absolute value helper
+max	KEYWORD2	Maximum of two values
+min	KEYWORD2	Minimum of two values
+align_up	KEYWORD2	Align value upwards to boundary
+align_down	KEYWORD2	Align value downwards to boundary
+is_aligned	KEYWORD2	Check if value is aligned
+alignment_of	KEYWORD1	Compile-time alignment trait
+max_align	KEYWORD1	Maximum alignment helper
+align_ptr	KEYWORD2	Align pointer to boundary
+unaligned_load	KEYWORD2	Load unaligned value
+unaligned_store	KEYWORD2	Store unaligned value
+function	KEYWORD1	Function wrapper type
+delegate	KEYWORD1	Lightweight delegate type
+make_delegate	KEYWORD2	Create a delegate from object + method
+bind	KEYWORD2	Bind a function or method
+invoke	KEYWORD2	Invoke stored callable
+callable	KEYWORD1	Callable trait / concept
+is_callable	KEYWORD1	Trait to test if type is callable
+function_ref	KEYWORD1	Non-owning function reference
+make_function_ref	KEYWORD2	Create a function_ref from callable
+invoke	KEYWORD2	Invoke referenced callable
+pair	KEYWORD1	Lightweight pair type
+make_pair	KEYWORD2	Create a pair from two values
+first	KEYWORD2	Access first element of pair
+second	KEYWORD2	Access second element of pair
+swap	KEYWORD2	Swap two pairs
+stack	KEYWORD1	Simple stack container
+push	KEYWORD2	Push element onto stack
+pop	KEYWORD2	Pop element from stack
+top	KEYWORD2	Access top element
+empty	KEYWORD2	Check if stack is empty
+size	KEYWORD2	Get number of elements
+clear	KEYWORD2	Clear all elements
+byte	KEYWORD1	Unsigned 8-bit byte type
+word	KEYWORD1	Unsigned 16-bit word type
+dword	KEYWORD1	Unsigned 32-bit double word
+qword	KEYWORD1	Unsigned 64-bit quad word
+
+sbyte	KEYWORD1	Signed 8-bit byte type
+sword	KEYWORD1	Signed 16-bit word type
+sdword	KEYWORD1	Signed 32-bit double word
+sqword	KEYWORD1	Signed 64-bit quad word
+
+usize	KEYWORD1	Unsigned size type
+ssize	KEYWORD1	Signed size type
+
+is_same	KEYWORD1	Type trait: check if two types are the same
+is_const	KEYWORD1	Type trait: check if type is const
+is_volatile	KEYWORD1	Type trait: check if type is volatile
+is_pointer	KEYWORD1	Type trait: check if type is a pointer
+is_reference	KEYWORD1	Type trait: check if type is a reference
+is_array	KEYWORD1	Type trait: check if type is an array
+remove_const	KEYWORD2	Remove const qualifier
+remove_volatile	KEYWORD2	Remove volatile qualifier
+remove_cv	KEYWORD2	Remove const and volatile qualifiers
+remove_reference	KEYWORD2	Remove reference qualifier
+remove_pointer	KEYWORD2	Remove pointer indirection
+add_const	KEYWORD2	Add const qualifier
+add_volatile	KEYWORD2	Add volatile qualifier
+add_cv	KEYWORD2	Add const and volatile qualifiers
+add_pointer	KEYWORD2	Add pointer indirection
+add_reference	KEYWORD2	Add reference qualifier
+decay	KEYWORD1	Type decay transformation
+enable_if	KEYWORD1	SFINAE enable-if helper
+conditional	KEYWORD1	Compile-time conditional type
+color	KEYWORD1	Color type (RRGGBBAA)
+color_name	KEYWORD1	Named color identifier
+from_name	KEYWORD2	Create color from predefined name
+color_from_name	KEYWORD2	Internal color lookup helper

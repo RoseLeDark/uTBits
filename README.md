@@ -13,6 +13,7 @@
 - **Header-only**: drop-in headers, no build dependencies.  
 - **`fast_addr_t` / `fast_register_view`**: typed, safe bit views for memory and peripheral registers.  
 - **Color utilities**: `utb::grafic::color` for float-based color handling and conversions.  
+-	**Algorithm helpers**: optimized copy/move, fill, search, bit utilities, and more
 - **Low-level examples**: native, AVR (Arduino Mega), ESP32, and WS2812 low-level drivers that use only uTBits APIs.  
 - **License**: EUPL‑1.2.
 
@@ -82,6 +83,15 @@ Full examples are available in the `examples/` files: `arduino_mega_fast_addr.cp
 - **Color utilities**  
   - `utb::math::color` — float-based color types (0.0f..1.0f).  
   - `from_name<T>(color_name)` — construct a color from predefined names.
+
+- **Algorithms & Utilities** (from utalgorithm.h)
+  - copy_n, move_n, fill, fill_n — optimized memory operations.
+  - construct_n, destruct_n — object lifecycle helpers.
+  - lower_bound, upper_bound, binary_search, find, find_if — search algorithms.
+  - foreach, accumulate — range utilities.
+  - swap_ranges, random_shuffle — sequence manipulation.
+  - nlz, popcount — bit-level helpers.
+  - hex2char, isalpha, isxdigit — character utilities.
 
 ---
 
