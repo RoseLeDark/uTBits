@@ -1,18 +1,16 @@
 {
-  "name": "µTBits",
-  "version": "1.0.0",
+  "name": "uTBits",
+  "version": "0.5.0",
   "description": "A header-only, platform-independent C++ utility library for embedded and systems programming.",
   "keywords": [
     "header-only",
     "embedded",
     "utility",
-    "memory",
-    "address-view",
+    "bitview",
+    "fastview",
     "color",
-    "stack",
-    "node",
-    "pair",
-    "map"
+    "math",
+    "memory"
   ],
   "authors": [
     {
@@ -21,6 +19,12 @@
     }
   ],
   "license": "EUPL-1.2",
+  "homepage": "https://github.com/RoseLeDark/uTBits",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RoseLeDark/uTBits.git"
+  },
+
   "frameworks": "*",
   "platforms": "*",
 
@@ -30,8 +34,8 @@
 
   "export": {
     "include": [
-      "include/*.h",
-      "include/*.hpp",
+      "include",
+      "examples",
       "README.md",
       "LICENCE.md"
     ]
