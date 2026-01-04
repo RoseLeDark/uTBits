@@ -1,0 +1,39 @@
+{
+  "name": "µTBits",
+  "version": "1.0.0",
+  "description": "A header-only, platform-independent C++ utility library for embedded and systems programming.",
+  "keywords": [
+    "header-only",
+    "embedded",
+    "utility",
+    "memory",
+    "address-view",
+    "color",
+    "stack",
+    "node",
+    "pair",
+    "map"
+  ],
+  "authors": [
+    {
+      "name": "Amber-Sophia Schröck",
+      "maintainer": true
+    }
+  ],
+  "license": "EUPL-1.2",
+  "frameworks": "*",
+  "platforms": "*",
+
+  "build": {
+    "includeDir": "include"
+  },
+
+  "export": {
+    "include": [
+      "include/*.h",
+      "include/*.hpp",
+      "README.md",
+      "LICENCE.md"
+    ]
+  }
+}
