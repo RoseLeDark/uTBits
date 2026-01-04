@@ -1,8 +1,6 @@
-### uTBits
+# uTBits
 
-[![Release](https://img.shields.io/github/v/release/RoseLeDark/uTBits?style=flat-square)](https://github.com/RoseLeDark/uTBits/releases) [![License](https://img.shields.io/badge/license-EUPL--1.2-blue?style=flat-square)](https://github.com/RoseLeDark/uTBits/blob/main/LICENCE.md) [![PlatformIO](https://img.shields.io/badge/PlatformIO-compatible-green?style=flat-square)](https://platformio.org/lib) [![Stars](https://img.shields.io/github/stars/RoseLeDark/uTBits?style=flat-square)](https://github.com/RoseLeDark/uTBits/stargazers)
-
----
+ [![License](https://img.shields.io/badge/license-EUPL--1.2-blue?style=flat-square)](https://github.com/RoseLeDark/uTBits/blob/main/LICENCE.md) [![PlatformIO](https://img.shields.io/badge/PlatformIO-compatible-green?style=flat-square)](https://platformio.org/lib) [![Stars](https://img.shields.io/github/stars/RoseLeDark/uTBits?style=flat-square)](https://github.com/RoseLeDark/uTBits/stargazers)
 
 ### Overview
 
