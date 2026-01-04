@@ -1,5 +1,5 @@
 # µTBits
-
+[![PlatformIO Registry](https://badges.registry.platformio.org/packages/pba3h11aso/library/µTBits.svg)](https://registry.platformio.org/libraries/pba3h11aso/µTBits)
  [![License](https://img.shields.io/badge/license-EUPL--1.2-blue?style=flat-square)](https://github.com/RoseLeDark/uTBits/blob/main/LICENCE.md) [![PlatformIO](https://img.shields.io/badge/PlatformIO-compatible-green?style=flat-square)](https://platformio.org/lib) [![Stars](https://img.shields.io/github/stars/RoseLeDark/uTBits?style=flat-square)](https://github.com/RoseLeDark/uTBits/stargazers)
 
 ### Overview
