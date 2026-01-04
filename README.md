@@ -29,14 +29,14 @@ Add the library from the PlatformIO registry or clone the repository and include
 [env:native]
 platform = native
 lib_deps = 
-  https://github.com/RoseLeDark/uTBits.git
+  pba3h11aso/µTBits@^0.5.1
 
 [env:mega]
 platform = atmelavr
 board = megaatmega2560
 framework = arduino
 lib_deps = 
-  https://github.com/RoseLeDark/uTBits.git
+  pba3h11aso/µTBits@^0.5.1
 ```
 
 **Include in code**
