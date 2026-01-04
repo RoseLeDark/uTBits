@@ -14,7 +14,7 @@
 
 - **Header-only**: drop-in headers, no build dependencies.  
 - **`fast_addr_t` / `fast_register_view`**: typed, safe bit views for memory and peripheral registers.  
-- **Color utilities**: `utb::math::color` for float-based color handling and conversions.  
+- **Color utilities**: `utb::grafic::color` for float-based color handling and conversions.  
 - **Low-level examples**: native, AVR (Arduino Mega), ESP32, and WS2812 low-level drivers that use only uTBits APIs.  
 - **License**: EUPL‑1.2.
 
