@@ -12,7 +12,7 @@
 
 - **Header-only**: drop-in headers, no build dependencies.  
 - **`fast_addr_t` / `fast_register_view`**: typed, safe bit views for memory and peripheral registers.  
-- **Color utilities**: `utb::grafic::color` for float-based color handling and conversions.  
+- **Color utilities**: `utb::graphic::color` for float-based color handling and conversions.  
 -	**Algorithm helpers**: optimized copy/move, fill, search, bit utilities, and more
 - **Low-level examples**: native, AVR (Arduino Mega), ESP32, and WS2812 low-level drivers that use only uTBits APIs.  
 - **License**: EUPL‑1.2.
@@ -50,7 +50,7 @@ lib_deps =
 
 ### Example: WS2812 (low-level, API-first)
 
-This example demonstrates a WS2812 driver that uses only uTBits APIs: `create_fast_view<T>(address)`, `set(pos, bool)`, `flip(pos)`, and `utb::math::color`. It uses timer polling for deterministic timing and avoids `digitalWrite()` or direct register macros.
+This example demonstrates a WS2812 driver that uses only uTBits APIs: `create_fast_view<T>(address)`, `set(pos, bool)`, `flip(pos)`, and `utb::graphic::color`. It uses timer polling for deterministic timing and avoids `digitalWrite()` or direct register macros.
 
 **Snippet**
 
@@ -62,8 +62,8 @@ portd = utb::create_fast_view<uint8_t>(0x2B);
 // set pin as output via DDR
 ddrd->set(LED_BIT, true);
 
-// send a color (utb::math::color uses floats 0.0..1.0)
-utb::math::color c(1.0f, 0.0f, 0.0f);
+// send a color (utb::graphic::color uses floats 0.0..1.0)
+utb::graphic::color c(1.0f, 0.0f, 0.0f);
 sendColor(c);
 ```
 
@@ -81,7 +81,7 @@ Full examples are available in the `examples/` files: `arduino_mega_fast_addr.cp
   - `value` union member exposes the underlying numeric value when needed.
 
 - **Color utilities**  
-  - `utb::math::color` — float-based color types (0.0f..1.0f).  
+  - `utb::graphic::color` — float-based color types (0.0f..1.0f).  
   - `from_name<T>(color_name)` — construct a color from predefined names.
 
 - **Algorithms & Utilities** (from utalgorithm.h)

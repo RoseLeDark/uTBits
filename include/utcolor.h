@@ -8,7 +8,7 @@
 
 namespace utb {
 
-    namespace grafic {
+    namespace graphic {
         template <typename T> 
         class basic_color {
         public:

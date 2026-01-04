@@ -4,7 +4,7 @@
 #include "utcolor.h"
 
 namespace utb {
-    namespace grafic {
+    namespace graphic {
         enum class color_name : unsigned int {
             AliceBlue = 0xF0F8FFFF,
             AntiqueWhite = 0xFAEBD7FF,
