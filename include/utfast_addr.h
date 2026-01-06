@@ -2,7 +2,7 @@
 #define __UTFAST_TYPE_H__
 
 #include "uttypes.h"
-
+#include "utfunctional.h"
 namespace utb {
     namespace detail {
         class base_fastbit {
@@ -10,7 +10,7 @@ namespace utb {
             unsigned char bit : 1;
 
             base_fastbit()  { bit = 0; }
-            base_fastbit(bool b) { bit = b ? 1 : 0; }
+            explicit base_fastbit(unsigned char b) { bit = b ? 1 : 0; }
             base_fastbit(const base_fastbit& b) { bit = b.bit; }
             
             base_fastbit& operator = (const base_fastbit& other) {
@@ -34,8 +34,9 @@ namespace utb {
             void flip() { bit = (bit ==1) ? 0 : 1; }
         };
     }
+
     
-    template <typename TVALUE, size_t TBits, typename TBiteType = detail::base_fastbit>
+    template <typename TVALUE, utb::size_t TBits, typename TBiteType = detail::base_fastbit>
     class fast_register_view {
         union {
             TVALUE value;
@@ -70,8 +71,8 @@ namespace utb {
             return TBits - num_zeros();
         }
 
-        void set(size_type pos, bit p) {
-            if(p < TBits)  bits[pos].bit = p ? 1 : 0;
+        void set(size_type pos, bit_type p) {
+            if(p < TBits)  bits[pos].bit = p;
         }
 
         self_type& flip() {
@@ -152,10 +153,10 @@ namespace utb {
             return result;
         }
     };
-    template <typename TVALUE, size_t TBits = sizeof(TVALUE) * 8, typename TBiteType = detail::base_fastbit>
+    template <typename TVALUE, utb::size_t TBits = sizeof(TVALUE) * 8, typename TBiteType = detail::base_fastbit>
     using fast_addr_t = fast_register_view<TVALUE, TBits, TBiteType>;
 
-    template <typename TVALUE, size_t TBits = sizeof(TVALUE) * 8, typename TBiteType = detail::base_fastbit>
+    template <typename TVALUE, utb::size_t TBits = sizeof(TVALUE) * 8, typename TBiteType = detail::base_fastbit>
     fast_addr_t<TVALUE, TBits, TBiteType>*  create_fast_view(uintptr_t address) {
         return reinterpret_cast<fast_addr_t<TVALUE, TBits, TBiteType>*>(address);
     }
@@ -165,7 +166,7 @@ namespace utb {
     using dword             = fast_addr_t<uint32_t>;        // 32 Bit
     using qword             = fast_addr_t<uint64_t>;        // 64 Bit
 
-    using fsize_t           = fast_addr_t<size_t>;
+    using fsize_t           = fast_addr_t<utb::size_t>;
     using ffloat_t          = fast_addr_t<float>;
     using fdouble_t         = fast_addr_t<double>;
 

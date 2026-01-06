@@ -9,11 +9,11 @@
 
 namespace utb {
 
-    inline size_t nlz_base(uint64_t x) {
+    inline utb::size_t nlz_base(uint64_t x) {
 		 unsigned long long value = x;
 		 return sizeof(value) * CHAR_BIT - __builtin_clzll(value);
 	}
-	inline size_t nlz(uint64_t x) {
+	inline utb::size_t nlz(uint64_t x) {
 		return nlz_base(x) - 1;
 	}
 
@@ -39,7 +39,7 @@ namespace utb {
     namespace internal {
 
         template<typename T>
-        void copy_n(const T* first, size_t n, T* result, utb::int_to_type<false>) {
+        void copy_n(const T* first, utb::size_t n, T* result, utb::int_to_type<false>) {
             const T* last = first + n;
 
             while (first != last) {
@@ -53,7 +53,7 @@ namespace utb {
         }
 
         template<typename T>
-        void copy_n(const T* first, size_t n, T* result, utb::int_to_type<true>) {
+        void copy_n(const T* first, utb::size_t n, T* result, utb::int_to_type<true>) {
             assert(result >= first + n || result < first);
             memcpy(result, first, n * sizeof(T));
         }
@@ -66,18 +66,18 @@ namespace utb {
         }
         template<typename T>
         void copy(const T* first, const T* last, T* result, utb::int_to_type<true>) {
-            const size_t n = reinterpret_cast<const char*>(last) - reinterpret_cast<const char*>(first);
+            const utb::size_t n = reinterpret_cast<const char*>(last) - reinterpret_cast<const char*>(first);
             memcpy(result, first, n);
         }
 
         template<typename T>
-        inline void move_n(const T* from, size_t n, T* result, utb::int_to_type<false>) {
+        inline void move_n(const T* from, utb::size_t n, T* result, utb::int_to_type<false>) {
             for (int i = int(n) - 1; i >= 0; --i)
                     result[i] = from[i];
         }
 
         template<typename T>
-        inline void move_n(const T* first, size_t n, T* result, utb::int_to_type<true>) {
+        inline void move_n(const T* first, utb::size_t n, T* result, utb::int_to_type<true>) {
             memmove(result, first, n * sizeof(T));
         }
 
@@ -89,32 +89,32 @@ namespace utb {
         }
         template<typename T>
         inline  void move(const T* first, const T* last, T* result, utb::int_to_type<true>) {
-            const size_t n = reinterpret_cast<uintptr_t>(last) - reinterpret_cast<uintptr_t>(first);
+            const utb::size_t n = reinterpret_cast<uintptr_t>(last) - reinterpret_cast<uintptr_t>(first);
             memmove(result, first, n);
         }
 
 
         template<typename T>
-        void copy_construct_n(const T* first, size_t n, T* result, utb::int_to_type<false>) {
-            for (size_t i = 0; i < n; ++i)
+        void copy_construct_n(const T* first, utb::size_t n, T* result, utb::int_to_type<false>) {
+            for (utb::size_t i = 0; i < n; ++i)
                 new (result + i) T(first[i]);
         }
 
         template<typename T>
-        void copy_construct_n(const T* first, size_t n, T* result, utb::int_to_type<true>) {
+        void copy_construct_n(const T* first, utb::size_t n, T* result, utb::int_to_type<true>) {
             assert(result >= first + n || result < first);
             memcpy(result, first, n * sizeof(T));
         }
 
         template<typename T>
-        void destruct_n(T* first, size_t n, utb::int_to_type<false>) {
+        void destruct_n(T* first, utb::size_t n, utb::int_to_type<false>) {
             sizeof(first);
-            for (size_t i = 0; i < n; ++i)
+            for (utb::size_t i = 0; i < n; ++i)
                     (first + i)->~T();
         }
 
         template<typename T>
-        inline void destruct_n(T*, size_t, utb::int_to_type<true>) {
+        inline void destruct_n(T*, utb::size_t, utb::int_to_type<true>) {
             // Nothing to do, no destructor needed.
         }
 
@@ -150,9 +150,9 @@ namespace utb {
         }
 
         template<typename T>
-        void construct_n(T* to, size_t count, utb::int_to_type<false>) {
+        void construct_n(T* to, utb::size_t count, utb::int_to_type<false>) {
             sizeof(to);
-            for (size_t i = 0; i < count; ++i)
+            for (utb::size_t i = 0; i < count; ++i)
                     new (to + i) T();
         }
 
@@ -292,7 +292,7 @@ namespace utb {
 		return static_cast<const R>(static_cast<const void*>(p));
 	}
 
-    inline size_t popcount (uint32_t v)	{ return __builtin_popcount (v); }
+    inline utb::size_t popcount (uint32_t v)	{ return __builtin_popcount (v); }
 
 
 
@@ -315,7 +315,7 @@ namespace utb {
 	}
 
     template<typename T>
-    void copy_n(const T* src, size_t n, T* dest) {
+    void copy_n(const T* src, utb::size_t n, T* dest) {
 	        internal::copy_n(src, n, dest, utb::int_to_type<utb::has_trivial_copy<T>::value>());
 	}
 
@@ -325,12 +325,12 @@ namespace utb {
 	}
 
 	template<typename T>
-    void copy_construct_n(T* src, size_t n, T* dest) {
+    void copy_construct_n(T* src, utb::size_t n, T* dest) {
 	        internal::copy_construct_n(src, n, dest, utb::int_to_type<utb::has_trivial_copy<T>::value>());
 	}
 
 	template<typename T>
-    void move_n(const T* from, size_t n, T* dest) {
+    void move_n(const T* from, utb::size_t n, T* dest) {
         assert(from != dest || n == 0);
 
         if (dest + n >= from && dest < from + n) {
@@ -343,7 +343,7 @@ namespace utb {
 	template<typename T>
     inline void move(const T* src, const T* last, T* dest) {
         assert(src != dest || src == last);
-        const size_t n = reinterpret_cast<uintptr_t>(last) - reinterpret_cast<uintptr_t>(src);
+        const utb::size_t n = reinterpret_cast<uintptr_t>(last) - reinterpret_cast<uintptr_t>(src);
         const unsigned char* destEnd = reinterpret_cast<const unsigned char*>(dest) + n;
 
         if (destEnd >= reinterpret_cast<const unsigned char*>(src) && dest < last) {
@@ -360,7 +360,7 @@ namespace utb {
 
 	template <typename T>
 	inline T* copy_backward (const T* first, const T* last, T* result) noexcept {
-		const size_t nBytes (utb::distance (first, last));
+		const utb::size_t nBytes (utb::distance (first, last));
 		memmove (advance_ptr(result,-nBytes), first, nBytes);
 	}
 
@@ -373,11 +373,11 @@ namespace utb {
 	}
 
 	template<typename T>
-    void construct_n(T* src, size_t n) {
+    void construct_n(T* src, utb::size_t n) {
 	    internal::construct_n(src, n, utb::int_to_type<utb::has_trivial_constructor<T>::value>());
 	}
 	template<typename T>
-    void destruct_n(T* src, size_t n) {
+    void destruct_n(T* src, utb::size_t n) {
 	    internal::destruct_n(src, n, utb::int_to_type<utb::has_trivial_destructor<T>::value>());
 	}
     template<typename T>
@@ -388,7 +388,7 @@ namespace utb {
 	}
 
 	template<typename T>
-    inline void fill_n(T* src, size_t n, const T& val) {
+    inline void fill_n(T* src, utb::size_t n, const T& val) {
         T* last = src + n;
         while (src != last) {
             switch (n & 0x7) {
@@ -410,7 +410,7 @@ namespace utb {
 		TIter mid;
 		while (first != last) {
 
-			mid = first + size_t(utb::distance (first,last))/2;
+			mid = first + utb::size_t(utb::distance (first,last))/2;
 			if (value < *mid) first = mid + 1;
 			else last = mid;
 		}
@@ -441,7 +441,7 @@ namespace utb {
 		TIter mid;
 		while (first != last) {
 
-			mid = first + size_t(utb::distance (first,last))/2;
+			mid = first + utb::size_t(utb::distance (first,last))/2;
 			if (value < *mid) last = mid;
 			else first = mid + 1;
 		}
@@ -566,9 +566,9 @@ namespace utb {
         b = utb::move(tmp);
 	}
 
-	template <typename TAssignable, size_t N>
+	template <typename TAssignable, utb::size_t N>
     inline void swap(TAssignable (&x)[N], TAssignable (&y)[N]) {
-      for (size_t i = 0; i < N; i++)
+      for (utb::size_t i = 0; i < N; i++)
 			utb::swap(x[i], y[i]);
     }
 

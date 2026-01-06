@@ -5,10 +5,10 @@
 #include "utalignment.h"
 
 namespace utb {
-    template <class Sig, size_t sz, size_t algn>
+    template <class Sig, utb::size_t sz, utb::size_t algn>
     class light_function_base;
 
-	template <class TSIG, class... Args, size_t sz, size_t algn>
+	template <class TSIG, class... Args, utb::size_t sz, utb::size_t algn>
     class light_function_base<TSIG(Args...), sz, algn> {
         struct vtable_t {
             void (*mover)(void *src, void *dest);
@@ -76,23 +76,23 @@ namespace utb {
         aligned_storage_t<sz, algn> data;
     };
 
-    template <class TSIG, class... Args, size_t sz, size_t algn>
+    template <class TSIG, class... Args, utb::size_t sz, utb::size_t algn>
     inline bool operator==(const light_function_base<TSIG(Args...), sz, algn> &__f, nullptr_t) {
         return !static_cast<bool>(__f);
     }
 
 
-    template <class TSIG, class... Args, size_t sz, size_t algn>
+    template <class TSIG, class... Args, utb::size_t sz, utb::size_t algn>
     inline bool operator==(nullptr_t, const light_function_base<TSIG(Args...), sz, algn> &__f) {
         return !static_cast<bool>(__f);
     }
 
-    template <class TSIG, class... Args, size_t sz, size_t algn>
+    template <class TSIG, class... Args, utb::size_t sz, utb::size_t algn>
     inline bool operator!=(const light_function_base<TSIG(Args...), sz, algn> &__f, nullptr_t) {
         return static_cast<bool>(__f);
     }
 
-    template <class TSIG, class... Args, size_t sz, size_t algn>
+    template <class TSIG, class... Args, utb::size_t sz, utb::size_t algn>
     inline bool operator!=(nullptr_t, const light_function_base<TSIG(Args...), sz, algn> &__f) {
         return static_cast<bool>(__f);
     }

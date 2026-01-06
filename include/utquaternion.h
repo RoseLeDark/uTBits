@@ -5,6 +5,7 @@
 #include "utvector3.h"
 #include "utalgorithm.h"
 #include "utmap.h"
+#include "utfunctional.h"
 
 #include <cfloat>
 
@@ -20,20 +21,28 @@ namespace utb {
 
             union
             {
-                vector4<value_type> vec;
+                struct {
+                    value_type x;
+                    value_type y;
+                    value_type z;
+                    value_type s;
+                }
 		        float qu[4];
             };
 
             quaternion() : vec(vector4<value_type>(0.0f))	{}
 
-            quaternion(value_type fs, value_type x, value_type y, value_type z) : vec(vector4<value_type>(x, y, z, fs))	{}
+            quaternion(value_type fs, value_type x, value_type y, value_type z) 
+                : x(x), y(y), z(z), s(fs)	{}
             quaternion(const vector3<value_type> &axis);
-            quaternion(float *pfs)  : vec(vector4<value_type>(pfs[1], pfs[2], pfs[3], pfs[0]))	{}
- 
-            quaternion(const self_type& q) : vec(q.vec)	{}
+            quaternion(float *pfs)  
+                : x(pfs[1]), y(pfs[2]), z(pfs[3]), s(pfs[0]))	{}
 
-            float s() const { return vec.w; }
-            vector3<value_type> v() const { return vector3<value_type>(vec.x, vec.y, vec.z); }
+            quaternion(const self_type& q) : x(q.x), y(q.y), z(q.z), s(q.s)	{}
+            quaternion(self_type&& q) : x(utb::move(q.x)), y(utb::move(q.y)), z(utb::move(q.z)), s(utb::move(q.s))	{}
+
+            float s() const { return s; }
+            vector3<value_type> v() const { return vector3<value_type>(x, y, z); }
 
             operator pointer ()		{ return (pointer)(qu); }
             operator const_pointer () const	{ return (float*)qu; }
@@ -51,10 +60,10 @@ namespace utb {
                 vec -= q.vec;  return *this; 
             }
             self_type& operator *= (const self_type& b) {
-                vec.w = ((vec.w * b.vec.w) - (vec.x * b.vec.x) - (vec.y * b.vec.y) - (vec.z * b.vec.z));
-                vec.x = ((vec.w * b.vec.x) + (vec.x * b.vec.w) + (vec.y * b.vec.z) - (vec.z * b.vec.y));
-                vec.y = ((vec.w * b.vec.y) - (vec.x * b.vec.z) + (vec.y * b.vec.w) + (vec.z * b.vec.x));
-                vec.z = ((vec.w * b.vec.z) + (vec.x * b.vec.y) - (vec.y * b.vec.x) + (vec.z * b.vec.w));
+                s = ((s * b.s) - (x * b.x) - (y * b.y) - (z * b.z));
+                x = ((s * b.x) + (x * b.s) + (y * b.z) - (z * b.y));
+                y = ((s * b.y) - (x * b.z) + (y * b.s) + (z * b.x));
+                z = ((s * b.z) + (x * b.y) - (y * b.x) + (z * b.s));
                 return *this;
             }
             self_type& operator *= (const value_type f)    { 
@@ -74,16 +83,16 @@ namespace utb {
                 return !(*this == q);
             }
             bool operator < (const self_type& q) const {
-                return (vec.x < q.vec.x) && (vec.y < q.vec.y) && (vec.z < q.vec.z) && (vec.w < q.vec.w);
+                return (x < q.x) && (y < q.y) && (z < q.z) && (s < q.s);
             }
             bool operator > (const self_type& q) const {
-                return (vec.x > q.vec.x) && (vec.y > q.vec.y) && (vec.z > q.vec.z) && (vec.w > q.vec.w);
+                return (x > q.x) && (y > q.y) && (z > q.z) && (s > q.s);
             }
             bool operator <= (const self_type& q) const {
-                return (vec.x <= q.vec.x) && (vec.y <= q.vec.y) && (vec.z <= q.vec.z) && (vec.w <= q.vec.w);
+                return (x <= q.x) && (y <= q.y) && (z <= q.z) && (s <= q.s);
             }
             bool operator >= (const self_type& q) const {
-                return (vec.x >= q.vec.x) && (vec.y >= q.vec.y) && (vec.z >= q.vec.z) && (vec.w >= q.vec.w);
+                return (x >= q.x) && (y >= q.y) && (z >= q.z) && (s >= q.s);
             }
         };
 

@@ -11,8 +11,8 @@ namespace utb {
     using nullptr_t 	= decltype(nullptr);
     using addrof_null_t = nullptr_t ;
 
-    const size_t default_alignment = alignof(void*);
-	constexpr size_t max_alignment = alignof(max_align_t);
+    const utb::size_t default_alignment = alignof(void*);
+	constexpr utb::size_t max_alignment = alignof(max_align_t);
 
     namespace detail {
 
@@ -32,7 +32,7 @@ namespace utb {
 
 
 
-        template<size_t N> struct type_with_alignment {
+        template<utb::size_t N> struct type_with_alignment {
 	        typedef char err_invalid_alignment[N > 0 ? -1 : 1];
 	    };
 
@@ -85,32 +85,32 @@ namespace utb {
 	};
 
 
-	template <size_t Target, bool check>  struct long_double_alignment{ using type = long double; };
-	template <size_t Target> struct long_double_alignment<Target, false> {
+	template <utb::size_t Target, bool check>  struct long_double_alignment{ using type = long double; };
+	template <utb::size_t Target> struct long_double_alignment<Target, false> {
 		using type = detail::max_align; };
 
-	template <size_t Target, bool check> struct double_alignment{ using type = double; };
-    template <size_t Target> struct double_alignment<Target, false> {
+	template <utb::size_t Target, bool check> struct double_alignment{ using type = double; };
+    template <utb::size_t Target> struct double_alignment<Target, false> {
     	using type = typename long_double_alignment<Target, alignment_of<long double>::res >= Target>::type; };
 
-	template <size_t Target, bool check> struct long_long_alignment{  using type = long long; };
-	template <size_t Target> struct long_long_alignment<Target, false> {
+	template <utb::size_t Target, bool check> struct long_long_alignment{  using type = long long; };
+	template <utb::size_t Target> struct long_long_alignment<Target, false> {
     	using type = typename  double_alignment<Target, alignment_of<double>::res >= Target>::type; };
 
-	template <size_t Target, bool check> struct long_alignment{ using type = long; };
-	template <size_t Target> struct long_alignment<Target, false> {
+	template <utb::size_t Target, bool check> struct long_alignment{ using type = long; };
+	template <utb::size_t Target> struct long_alignment<Target, false> {
 		using type = typename long_long_alignment<Target, alignment_of<long long>::res >= Target>::type; };
 
-	template <size_t Target, bool check> struct int_alignment{ using type = int; };
-	template <size_t Target> struct int_alignment<Target, false>{
+	template <utb::size_t Target, bool check> struct int_alignment{ using type = int; };
+	template <utb::size_t Target> struct int_alignment<Target, false>{
 		using type = typename long_alignment<Target, alignment_of<long>::res >= Target>::type; };
 
-	template <size_t Target, bool check> struct short_alignment{ using type = short; };
-	template <size_t Target> struct short_alignment<Target, false>{
+	template <utb::size_t Target, bool check> struct short_alignment{ using type = short; };
+	template <utb::size_t Target> struct short_alignment<Target, false>{
 		using type = typename int_alignment<Target, alignment_of<int>::res >= Target>::type; };
 
-	template <size_t Target, bool check> struct char_alignment{ using type = char; };
-	template <size_t Target> struct char_alignment<Target, false>{
+	template <utb::size_t Target, bool check> struct char_alignment{ using type = char; };
+	template <utb::size_t Target> struct char_alignment<Target, false>{
 		using type = typename short_alignment<Target, alignment_of<short>::res >= Target>::type; };
 
     template<typename T>
@@ -119,28 +119,28 @@ namespace utb {
 	};
 
 	template <class integral>
-	constexpr bool is_aligned(integral x, size_t a) noexcept {
+	constexpr bool is_aligned(integral x, utb::size_t a) noexcept {
 		return (x & (integral(a) - 1)) == 0u;
 	}
-	inline bool is_aligned(const volatile void* p, size_t a) {
+	inline bool is_aligned(const volatile void* p, utb::size_t a) {
 	  return is_aligned(reinterpret_cast<uintptr_t>(p), a);
 	}
 
 	template <class integral>
-	constexpr integral align_up(integral x, size_t a) noexcept {
+	constexpr integral align_up(integral x, utb::size_t a) noexcept {
 		return integral((x + (integral(a) - 1)) & ~integral(a-1));
 	}
 	template <class pointer>
-	pointer align_up_ptr(pointer p, size_t a) {
+	pointer align_up_ptr(pointer p, utb::size_t a) {
 	  	return reinterpret_cast<pointer>(align_up(reinterpret_cast<uintptr_t>(p), a));
 	}
 
 	template <class integral>
-	constexpr integral align_down(integral x, size_t a) noexcept {
+	constexpr integral align_down(integral x, utb::size_t a) noexcept {
 		return integral(x & ~integral(a-1));
 	}
 	template <class pointer>
-	pointer align_down_ptr(pointer p, size_t a) {
+	pointer align_down_ptr(pointer p, utb::size_t a) {
 	  	return reinterpret_cast<pointer>(align_down(reinterpret_cast<uintptr_t>(p), a));
 	}
 
@@ -148,22 +148,22 @@ namespace utb {
 	/**
 	 * @brief is a valid alignment, i.e. a power of two not zero
 	 */
-	constexpr bool is_aligvalid(size_t alignment) noexcept {
+	constexpr bool is_aligvalid(utb::size_t alignment) noexcept {
 		return alignment && (alignment & (alignment - 1)) == 0u;
 	}
 
 	// returns the offset needed to align ptr for given alignment
-	inline size_t alig_offset(void* address, size_t alignment) noexcept {
+	inline utb::size_t alig_offset(void* address, utb::size_t alignment) noexcept {
 		if(!is_aligvalid(alignment)) return 0;
 
 		auto _isaligned = reinterpret_cast<uintptr_t>(address) & (alignment - 1);
 		return _isaligned != 0 ? (alignment - _isaligned) : 0;
 	}
 
-	inline size_t alignment_for(const size_t size) noexcept {
+	inline utb::size_t alignment_for(const utb::size_t size) noexcept {
 		if(size >= max_alignment) return max_alignment;
 
-		return (size_t(1) << nlz(size) );
+		return (utb::size_t(1) << nlz(size) );
 	}
 }
 

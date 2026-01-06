@@ -122,7 +122,7 @@ namespace utb {
     template <typename T>
     struct decay2 : decay3<T> {};
 
-    template <typename T, size_t N>
+    template <typename T, utb::size_t N>
     struct decay2<T[N]> : tag<T *> {};
 
     template <typename T>
@@ -212,51 +212,53 @@ namespace utb {
 		bool operator()(const T& a) const noexcept { return !a; }
 	};
 
-	template <size_t VAL, size_t X = 1>
+	template <utb::size_t VAL, utb::size_t X = 1>
 	struct sqrt{
-		using type = typename mn::conditional<
-			((X * X) > VAL), mn::integral_constant<intmax_t, X - 1>, mn::sqrt<VAL, X + 1> >::type;
-		static constexpr size_t value = type::value;
+		using type = typename utb::conditional<
+			((X * X) > VAL), utb::integral_constant<intmax_t, X - 1>, utb::sqrt<VAL, X + 1> >::type;
+		static constexpr utb::size_t value = type::value;
 	};
 
 	/**
 	 * @brief Calculates the Nth factorial value.
 	 * @tparam N The number to find the factorial value of.
 	 */
-	template <size_t N>
+	template <utb::size_t N>
 	struct factorial {
-		static constexpr size_t value = N * factorial<N - 1>::value;
+		static constexpr utb::size_t value = N * factorial<N - 1>::value;
 	};
 	/**
 	 * @brief Calculates the 0 factorial value.
 	 */
 	template <>
 	struct factorial<0> {
-		static constexpr size_t value = 1;
+		static constexpr utb::size_t value = 1;
 	};
 
 	/**
 	 * @brief Calculates the Nth Fibonacci value.
 	 * @tparam N The number to find the Fibbonacci value of.
 	 */
-	template <size_t N>
+	template <utb::size_t N>
 	struct fibonacci {
-		static constexpr size_t value = fibonacci<N - 1>::value + fibonacci<N - 2>::value;
+		static constexpr utb::size_t value = fibonacci<N - 1>::value + fibonacci<N - 2>::value;
 	};
 	/**
 	 * @brief Calculates the 0 Fibonacci value.
 	 */
 	template <>
 	struct fibonacci<0> {
-		static constexpr size_t value = 0;
+		static constexpr utb::size_t value = 0;
 	};
 	/**
 	 * @brief Calculates the 1 Fibonacci value.
 	 */
 	template <>
 	struct fibonacci<1> {
-		static constexpr size_t value = 1;
+		static constexpr utb::size_t value = 1;
 	};
+ 
+
 
 }
 

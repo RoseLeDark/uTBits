@@ -12,7 +12,7 @@ namespace utb {
      * @tparam TValue The type for the value.
      * @tparam TMapSize The Max Entry of this map
      */
-    template <class TKey, class TValue, int TMapSize = UTB_MAX_MAP_ENTRYS>
+    template <class TKey, class TValue, utb::size_t TMapSize = UTB_MAX_MAP_ENTRYS>
     class light_map {
     public:
         using mapped_type = TValue;
@@ -25,7 +25,7 @@ namespace utb {
         using const_pointer = const pair<TKey, TValue>*;
 
         using difference_type = ptrdiff_t;
-        using size_type = size_t;
+        using size_type = utb::size_t;
 
         using iterator = TValue*;
         using const_iterator = const TValue*;
