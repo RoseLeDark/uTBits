@@ -12,6 +12,91 @@
 
 namespace utb {
 
+	template<typename TYPE>
+	class buffer_iterator {
+		static_assert(TSIZE > 0, "Size must be greater than zero.");	
+	public:
+		using self_type = buffer_iterator<TYPE>;
+		using value_type = TYPE;
+		using pointer = value_type*;
+		using reference = value_type&;
+		using size_type = utb::size_t;
+		using const_reference = const value_type&;
+		using const_pointer = const value_type*;
+		using iterator_category = random_access_iterator_tag ;
+		using difference_type = ptrdiff_t;
+		using iterator = pointer;
+		using const_iterator = const value_type*;
+
+		explicit buffer_iterator(pointer& pBuffer, size_type sSize , size_type iStartPosition = 0) 
+			: m_iCurrentPosition(iStartPosition), m_pBuffer(pBuffer), m_sMaxSize(sSize) { }
+
+		~buffer_iterator() = default;
+
+		constexpr bool	operator== (const self_type& iter) const {
+			for(utb::size_t i = m_iCurrentPosition; i < m_sMaxSize; ++i) {
+				if (m_pBuffer[i] != iter.m_pBuffer[i]) {
+					return false;
+				}
+			}
+			return m_iCurrentPosition == iter.m_iCurrentPosition && m_sMaxSize == iter.m_sMaxSize;
+		}
+
+		constexpr bool	operator< (const self_type& iter) const
+			{ return m_itr < iter.m_itr; }
+
+		constexpr reference_type	operator* () const { return (*m_pBuffer[m_iCurrentPosition]); }
+		constexpr pointer			operator-> () const { return &*m_pBuffer[m_iCurrentPosition]; }
+
+		constexpr self_type&	operator++ () { if(m_iCurrentPosition < m_sMaxSize) ++m_iCurrentPosition;  return *this; }
+		constexpr self_type&	operator-- () { if(m_iCurrentPosition > 0) --m_iCurrentPosition; return *this; }
+
+		constexpr self_type		operator++ (int) { if(m_iCurrentPosition < m_sMaxSize) ++m_iCurrentPosition;  return *this; }
+		constexpr self_type		operator-- (int) { if(m_iCurrentPosition > 0) --m_iCurrentPosition; return *this; }
+
+		constexpr self_type&	operator+= (utb::size_t n) { 
+			m_iCurrentPosition += n; 
+			if (m_iCurrentPosition > m_sMaxSize) {
+				m_iCurrentPosition = m_sMaxSize;
+			}
+			return *this;
+		}
+
+		constexpr self_type&	operator-= (utb::size_t n) { 
+			if (n > m_iCurrentPosition) {
+				m_iCurrentPosition = 0;
+			} else {
+				 m_iCurrentPosition -= n;
+			}
+			return *this;
+		}
+
+		constexpr self_type		operator + (utb::size_t n) const {
+			self_type iter = *this;
+			iter.m_iCurrentPosition += n;
+			if (iter.m_iCurrentPosition > m_sMaxSize) {
+				iter.m_iCurrentPosition = m_sMaxSize;
+			}
+			return iter;
+		}
+
+		constexpr self_type		operator- (utb::size_t n) const {
+			self_type iter = *this;
+			iter.m_iCurrentPosition += n;
+			if (iter.m_iCurrentPosition > m_sMaxSize) {
+				iter.m_iCurrentPosition = m_sMaxSize;
+			}
+			return iter;
+		}
+
+		constexpr reference_type 	operator[] (utb::size_t n) const { assert(n < m_sMaxSize); return m_pBuffer[n]; }
+		constexpr difference_type	operator- (const self_type& i) const { return m_iCurrentPosition - i.m_iCurrentPosition; }
+
+	private:
+		size_type   m_iCurrentPosition;
+		size_type   m_sMaxSize;
+		pointer& 	m_pBuffer;
+	};
 	template<typename TYPE, TYPE* TRAWBUFFER, utb::size_t TSIZE>
 	class buffer {
 		static_assert(TSIZE > 0, "Size must be greater than zero.");
@@ -30,8 +115,8 @@ namespace utb {
 
 		using iterator_category = random_access_iterator_tag ;
 		using difference_type = ptrdiff_t;
-		using iterator = pointer;
-		using const_iterator = const value_type*;
+		using iterator = buffer_iterator<TYPE, TSIZE>;
+		using const_iterator = const buffer_iterator<TYPE, TSIZE>;
 
 		buffer() : m_sUsed(0) { }
 		buffer(const self_type& other) = delete;
@@ -47,25 +132,25 @@ namespace utb {
 		 * @brief Get the iterator to the beginning of the buffer.
 		 * @return The iterator to the beginning of the buffer.
 		 */
-		iterator begin() 			{ return TRAWBUFFER; }
+		iterator begin() 			{ return iterator(TRAWBUFFER, m_sUsed, 0); }
 
 		/**
 		 * @brief Get the iterator to the beginning of the buffer.
 		 * @return The iterator to the beginning of the buffer.
 		 */
-		const_iterator begin() const { return TRAWBUFFER; }
+		const_iterator begin() const { return const_iterator(TRAWBUFFER, m_sUsed, 0); }
 
 		/**
 		 * @brief Get the iterator to end of the buffer.
 		 * @return The iterator to end of the buffer.
 		 */
-		iterator end() 				{ return TRAWBUFFER + m_sUsed; }
+		iterator end() 				{ return iterator(&TRAWBUFFER[m_sUsed], m_sUsed, m_sUsed); }
 
 		/**
 		 * @brief Get the iterator to end of the buffer.
 		 * @return The iterator to end of the buffer.
 		 */
-		const_iterator end() const 	{ return TRAWBUFFER + m_sUsed; }
+		const_iterator end() const 	{ return const_iterator(&TRAWBUFFER[m_sUsed], m_sUsed, m_sUsed); }
 
 
 		utb::size_t write(const_reference value) {
@@ -120,12 +205,12 @@ namespace utb {
 			return utb::equal(begin(), end(), other.begin());
 		}
 
-		constexpr value_type at(size_type index) const {
+		constexpr reference at(size_type index) const {
 			assert (index < m_sUsed);
 			return TRAWBUFFER[index];
 		}
 
-		constexpr value_type at(size_type index) {
+		constexpr reference at(size_type index) {
 			assert (index < m_sUsed);
 			return TRAWBUFFER[index];
 		}
