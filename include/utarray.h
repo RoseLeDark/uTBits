@@ -10,9 +10,8 @@
 #include "utfunctional.h"
 #include "uttypetraits.h"
 
-
 namespace utb {
-    template<typename T, size_t N>
+    template<typename T, utb::size_t N>
     class basic_fixed_array {
     public:
         using self_type = basic_fixed_array<T, N>;
@@ -26,7 +25,7 @@ namespace utb {
         using const_iterator = const T*;
 
         using size_type = utb::size_t;
-        using difference_type = utb::ptrdiff_t;
+        using difference_type = ptrdiff_t;
 
         basic_fixed_array() { if(is_pointer<T>::value) fill(nullptr); else fill(T()); }
         basic_fixed_array(const value_type& val) 	{ fill(val); }
@@ -55,7 +54,9 @@ namespace utb {
         const_reference at(size_type pos) const 	{ return m_nData[pos]; }
 
         void fill(const value_type& val) {
-            utb::fill_n<value_type>(begin(), N, val);
+            for (size_type i = 0; i < N; ++i) {
+                m_nData[i] = val;
+            }
         }
 
         void swap(self_type& other) noexcept  {
@@ -63,16 +64,15 @@ namespace utb {
         }
 
         reference operator[](size_type pos) noexcept {
-            return m_nData[pos]; }
+            return m_nData[pos];
+        }
 
         constexpr const_reference operator[](size_type pos) const noexcept {
             return m_nData[pos];
         }
 
-        bool is_equele(const self_type& other) {
-            for(int i = 0; i<N; i++)
-                if(m_nData[i] != other.m_nData[i]) return false;
-            return true;
+        bool is_equal(const self_type& other) {
+            return utb::equal(begin(), end(), other.begin());
         }
 
     private:
@@ -80,61 +80,61 @@ namespace utb {
     };
 
     // Array comparisons.
-    template<typename T, size_t N>
+    template<typename T, utb::size_t N>
     inline bool  operator == (const basic_fixed_array<T, N>& a, const basic_fixed_array<T, N>& b) {
-        return a.is_equele(b);
+        return a.is_equal(b);
     }
 
-    template<typename T, size_t N>
+    template<typename T, utb::size_t N>
     inline bool  operator != (const basic_fixed_array<T, N>& a, const basic_fixed_array<T, N>& b) {
-        return !(a.is_equele(b));
+        return !(a.is_equal(b));
     }
 
 
-    template<typename T, size_t N>
+    template<typename T, utb::size_t N>
     inline bool  operator < (const basic_fixed_array<T, N>& a, const basic_fixed_array<T, N>& b) {
         for(int i = 0; i<N; i++)
             if(a[i] >= b[i]) return false;
         return true;
     }
 
-    template<typename T, size_t N>
+    template<typename T, utb::size_t N>
     inline bool  operator <= (const basic_fixed_array<T, N>& a, const basic_fixed_array<T, N>& b) {
         for(int i = 0; i<N; i++)
             if(a[i] > b[i]) return false;
         return true;
     }
 
-    template<typename T, size_t N>
+    template<typename T, utb::size_t N>
     inline bool  operator > (const basic_fixed_array<T, N>& a, const basic_fixed_array<T, N>& b) {
         for(int i = 0; i<N; i++)
             if(a[i] <= b[i]) return false;
         return true;
     }
 
-    template<typename T, size_t N>
+    template<typename T, utb::size_t N>
     inline bool  operator >= (const basic_fixed_array<T, N>& a, const basic_fixed_array<T, N>& b) {
         for(int i = 0; i<N; i++)
             if(a[i] < b[i]) return false;
         return true;
     }
 
-    template<typename T, size_t N>
+    template<typename T, utb::size_t N>
     inline void swap (basic_fixed_array<T, N>& a, basic_fixed_array<T, N>& b) {
         a.swap(b);
     }
 
-    template<typename T, size_t N>
+    template<typename T, utb::size_t N>
     inline void fill (basic_fixed_array<T, N>& a, const int val) {
         a.fill(val);
     }
 
-    template<typename T, size_t N>
+    template<typename T, utb::size_t N>
     inline void zero (basic_fixed_array<T, N>& a) {
         a.fill(0);
     }
 
-    template<typename T, size_t N>
+    template<typename T, utb::size_t N>
     using array = basic_fixed_array<T, N>;
 }
 
