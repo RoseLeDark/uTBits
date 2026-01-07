@@ -292,8 +292,6 @@ namespace utb {
 
 		constexpr reference_type	operator* () const
 			{ return (*m_itr); }
-		constexpr move_type		operator&& () const
-			{ return move(*m_itr); }
 
 		constexpr pointer			operator-> () const
 			{ return &*m_itr; }
@@ -318,11 +316,8 @@ namespace utb {
 		constexpr move_iterator		operator- (utb::size_t n) const
 			{ return move_iterator (m_itr - n); }
 
-		constexpr move_type			operator[] (utb::size_t n) const
-			{ return move(*(*this + n)); }
-
-		constexpr reference_type 	operator[] (utb::size_t n) const
-			{ return *(*this + n); }
+		constexpr reference_type			operator[] (utb::size_t n) const {
+			return *(*this + n); }
 
 		constexpr difference_type	operator- (const move_iterator& i) const
 			{ return distance (m_itr, i.m_itr); }
