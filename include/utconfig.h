@@ -25,6 +25,15 @@
 #define UTB_CONFIG_DEFAULT_STACK_SIZE UTB_SIZE_TYPE_AUTO
 #endif
 
+#ifndef UTB_CONFIG_ENABLE_ATOMIC
+#define UTB_CONFIG_ENABLE_ATOMIC UTB_YES
+#endif
+
+#ifndef UTB_CONFIG_BASIC_HASHMUL_VAL
+	/// Basic value for struct::hash as basic hash calculate @see utb::hash
+	#define UTB_CONFIG_BASIC_HASHMUL_VAL 2149645487U
+#endif // MN_THREAD_CONFIG_BASIC_HASHMUL_VAL
+
 
 /// ---- DO NOT EDIT BELOW THIS LINE ----
 #if UTB_SIZE_TYPE == UTB_SIZE_TYPE_AUTO
@@ -70,10 +79,24 @@
     #endif  
 #endif
 
+
+
+
 static_assert(sizeof(index_type) * 8 == UTB_SIZE_TYPE,
               "index_type size does not match UTB_SIZE_TYPE");
 namespace utb {
     using size_t = index_type;
+
+   /*#if UTB_CONFIG_ENABLE_ATOMIC == UTB_YES
+        #if USE_STD_ATOMIC == UTB_YES
+            template<typename T>
+            using atomic_t = std::atomic<T>;
+        #elif USE_UTB_ATOMIC == UTB_YES
+            #include "utatomic.h"
+            template<typename T>
+            using atomic_t = utb::atomic<T>;
+        #endif
+    #endif*/
 }
 
 #endif
