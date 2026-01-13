@@ -1,6 +1,6 @@
 {
   "name": "µTBits",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "description": "A header-only, platform-independent C++ utility library for embedded and systems programming.",
   "keywords": [
     "header-only",
