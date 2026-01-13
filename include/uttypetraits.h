@@ -5,6 +5,9 @@
 
 namespace utb {
 
+	
+    /// @brief Type traits for extracting type information
+    /// @tparam T The type to extract traits from
     template <typename T>
 	struct type_traits {
 		using value_type = T;

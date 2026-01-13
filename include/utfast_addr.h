@@ -3,8 +3,15 @@
 
 #include "uttypes.h"
 #include "utfunctional.h"
+/// @brief 
 namespace utb {
     namespace detail {
+        /**
+         * @brief Leichtgewichtige Wrapper-Klasse für ein einzelnes Bit.
+         *
+         * Verwaltet ein einzelnes Bit (als bit-field) und bietet
+         * grundlegende Operatoren zum Zuweisen, Vergleichen und Umschalten (flip).
+         */
         class base_fastbit {
         public:
             unsigned char bit : 1;
@@ -36,6 +43,17 @@ namespace utb {
     }
 
     
+    /**
+     * @brief View für ein Register oder einen Wert als Ganzes und als Bit-Feld.
+     *
+     * Ermöglicht den Zugriff auf denselben Speicherbereich als Wert (TVALUE)
+     * oder als Array einzelner Bits (TBiteType bits[TBits]). Nützlich für
+     * bitweise Manipulationen und direkte Adress-Views.
+     *
+     * @tparam TVALUE  Basistyp des dargestellten Werts (z.B. uint32_t).
+     * @tparam TBits   Anzahl der Bits im View (Standard: sizeof(TVALUE)*8).
+     * @tparam TBiteType Typ für einzelne Bits (Standard: utb::detail::base_fastbit).
+     */
     template <typename TVALUE, utb::size_t TBits, typename TBiteType = detail::base_fastbit>
     class fast_register_view {
         union {
@@ -153,18 +171,36 @@ namespace utb {
             return result;
         }
     };
+    /**
+     * @brief Alias für eine schnelle Adress-/Register-View.
+     *
+     * Standardmäßig entspricht TBits der Wortbreite von TVALUE in Bits.
+     */
     template <typename TVALUE, utb::size_t TBits = sizeof(TVALUE) * 8, typename TBiteType = detail::base_fastbit>
     using fast_addr_t = fast_register_view<TVALUE, TBits, TBiteType>;
 
+    /**
+     * @brief Erzeugt eine View auf eine gegebene Speicheradresse.
+     *
+     * Vorsicht: Die Funktion gibt einen rohen Zeiger zurück und übernimmt
+     * keine Speicher- oder Alignment-Prüfungen. Der Aufrufer ist verantwortlich
+     * für die Gültigkeit der Adresse.
+     *
+     * @param address Numerische Adresse, auf die die View zeigen soll.
+     * @return Zeiger auf fast_addr_t an der angegebenen Adresse.
+     */
     template <typename TVALUE, utb::size_t TBits = sizeof(TVALUE) * 8, typename TBiteType = detail::base_fastbit>
     fast_addr_t<TVALUE, TBits, TBiteType>*  create_fast_view(uintptr_t address) {
         return reinterpret_cast<fast_addr_t<TVALUE, TBits, TBiteType>*>(address);
     }
 
+    /// @name Typ-Aliasse für häufige Wortbreiten
+    ///@{
     using byte              = fast_addr_t<unsigned char>;   // 8 Bit
     using word              = fast_addr_t<uint16_t>;        // 16 Bit
     using dword             = fast_addr_t<uint32_t>;        // 32 Bit
     using qword             = fast_addr_t<uint64_t>;        // 64 Bit
+    ///@}
 
     using fsize_t           = fast_addr_t<utb::size_t>;
     using ffloat_t          = fast_addr_t<float>;

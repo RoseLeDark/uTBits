@@ -10,7 +10,10 @@
 #include <cfloat>
 
 namespace utb {
+    /// @brief Mathematical utilities namespace
     namespace math {
+        /// @brief Quaternion class for 3D rotations and orientations
+        /// @tparam T Scalar type (float, double, etc.)
         template <typename T>
         class quaternion {
         public:

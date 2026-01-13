@@ -7,6 +7,14 @@
 
 namespace utb {
 
+    /// @brief Fixed-size vector container with in-place storage.
+    ///
+    /// This container stores up to @p TCapacity elements of type @p T in a
+    /// preallocated internal buffer. It provides a subset of std::vector-like
+    /// operations but does not perform dynamic memory allocation.
+    ///
+    /// @tparam T Type of elements stored in the vector.
+    /// @tparam TCapacity Maximum number of elements the vector can hold.
     template<typename T, int TCapacity >
     class basic_vector  {
     public:

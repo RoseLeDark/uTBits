@@ -7,6 +7,12 @@
 
 namespace utb {
     namespace internal {
+        /// @brief Basic range template class for generating compile-time sequences
+        /// @tparam T The value type of the range elements
+        /// @tparam TSTART The starting value of the range
+        /// @tparam TEND The ending value of the range
+        /// @tparam TNEG Whether to negate the range values
+        /// @tparam TSTEP The step size between range elements
         template <typename T, T TSTART, T TEND, bool TNEG, T TSTEP> 
         class basic_range {
             static_assert(TEND >= TSTART, "TEND must be greeter then as TSTART");
@@ -67,6 +73,12 @@ namespace utb {
             value_type m_nRange[ COUNT ];
         };
     }
+    
+    /// @brief Template alias for a positive range with custom step size
+    /// @tparam T The value type of the range elements
+    /// @tparam TSTART The starting value of the range
+    /// @tparam TEND The ending value of the range
+    /// @tparam TSTEP The step size between range elements
     template <typename T, T TSTART, T TEND, T TSTEP> 
     using rangex = internal::basic_range<T, TSTART, TEND, false, TSTEP>;
 
