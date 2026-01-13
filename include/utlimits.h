@@ -429,7 +429,7 @@ namespace utb {
 		static constexpr value_type denorm_min() 	{ return __DBL_MIN__; }
 		static constexpr value_type infinity() 		{ return __builtin_huge_val(); }
 		static constexpr value_type quiet_NaN() 	{ return __builtin_nan(""); }
-		static constexpr value_type signaling_NaN() { return __builtin_nans("");; }
+		static constexpr value_type signaling_NaN() { return __builtin_nans(""); }
 
 		static constexpr 	int  digits    			= __DBL_MANT_DIG__;
 		static constexpr 	int  digits10  			= __DBL_DIG__;
@@ -475,7 +475,7 @@ namespace utb {
 		static constexpr value_type denorm_min() 	{ return __LDBL_MIN__; }
 		static constexpr value_type infinity() 		{ return __builtin_huge_val(); }
 		static constexpr value_type quiet_NaN() 	{ return __builtin_nanl(""); }
-		static constexpr value_type signaling_NaN() { return __builtin_nansl("");; }
+		static constexpr value_type signaling_NaN() { return __builtin_nansl(""); }
 
 		static constexpr 	int  digits    			= __LDBL_MANT_DIG__;
 		static constexpr 	int  digits10  			= __LDBL_DIG__;
