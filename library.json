@@ -28,10 +28,10 @@
     }
   ],
   "license": "EUPL-1.2",
-  "homepage": "https://github.com/RoseLeDark/uTBits",
+  "homepage": "https://github.com/KSchattenfeld/uTBits",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RoseLeDark/uTBits.git"
+    "url": "https://github.com/KSchattenfeld/uTBits.git"
   },
 
   "frameworks": "*",
