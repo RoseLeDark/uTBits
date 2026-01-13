@@ -478,9 +478,9 @@ namespace utb {
     template<> struct is_void<volatile void> : public integral_constant<bool, true> { };
     template<> struct is_void<const volatile void> : public integral_constant<bool, true> { };
 
-    template<> struct is_void<float> : public integral_constant<bool, true> { };
-    template<> struct is_void<double> : public integral_constant<bool, true> { };
-    template<> struct is_void<long double> : public integral_constant<bool, true> { };
+    template<> struct is_rational<float> : public integral_constant<bool, true> { };
+    template<> struct is_rational<double> : public integral_constant<bool, true> { };
+    template<> struct is_rational<long double> : public integral_constant<bool, true> { };
 }
 
 #endif
